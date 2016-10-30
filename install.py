@@ -295,7 +295,7 @@ sup_oscar_scan.close()
 sup_oscar_web = open('/etc/supervisor/conf.d/oscar_web.conf', 'w')
 sup_oscar_web.write('''[program:oscar_web]
 
-command=/usr/local/bin/node --debug /var/oscar/web/app.js
+command=/usr/bin/nodejs --debug /var/oscar/web/app.js
 directory=/var/oscar/web
 stdout_logfile=/var/log/supervisor/oscar_web.log
 redirect_stderr=true''')
