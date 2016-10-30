@@ -166,14 +166,17 @@ run_command('pip install PyYAML trello twilio')
 
 
 ######################################## oscar_web dependencies
-run_command('wget http://nodejs.org/dist/v0.10.22/node-v0.10.22.tar.gz')
-run_command('tar xzvf node-v0.10.22.tar.gz')
-os.chdir('node-v0.10.22')
-run_command('./configure')
-run_command('make')
-run_command('make install')
-os.chdir('..')
-
+#run_command('wget http://nodejs.org/dist/v0.10.22/node-v0.10.22.tar.gz')
+#run_command('tar xzvf node-v0.10.22.tar.gz')
+#os.chdir('node-v0.10.22')
+#run_command('wget http://nodejs.org/dist/v0.10.22/node-v0.10.22-linux-arm-pi.tar.gz') 
+#run_command('tar -xvf node-v0.10.22-linux-arm-pi.tar.gz') 
+#os.chdir('node-v0.10.22-linux-arm-pi')
+#run_command('./configure')
+#run_command('make')
+#run_command('make install')
+#os.chdir('..')
+run_command('apt-get install nodejs npm')
 
 ######################################## Dependencies of both
 run_command('apt-get update')
