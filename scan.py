@@ -11,7 +11,9 @@ import urllib2
 import hashlib
 import hmac
 import base64
-
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 import trello
 from twilio.rest import TwilioRestClient
 
@@ -19,6 +21,24 @@ import smtplib
 
 from lib import trellodb
 from lib import conf
+
+def str_to_utf8(s):
+    print 'UTF8 covertion started!'
+    if '\\u00c4' in s:
+        s = s.replace("\\u00c4", "Ä")
+    if '\\u00e4' in s:
+        s = s.replace("\\u00e4", "ä")
+    if '\\u00d6' in s:
+        s = s.replace("\\u00d6", "Ö")
+    if '\\u00f6' in s:
+        s= s.replace("\\u00f6", "ö")
+    if '\\u00dc' in s:
+        s = s.replace("\\u00dc", "Ü")
+    if '\\u00fc' in s:
+        s = s.replace("\\u00fc", "ü")
+    if '\\u00df' in s:
+        s = s.replace("\\u00df", "")
+    return s
 
 
 def parse_scanner_data(scanner_data):
@@ -63,6 +83,7 @@ class UPCAPI:
         try:
             json_blob = urllib2.urlopen(url).read()
             return json.loads(json_blob)['description'].encode('iso-8859-1')
+#            return str_to_utf8(json.loads(json_blob)['description'].encode('utf-8'))
         except urllib2.HTTPError, e:
             if 'UPC/EAN code invalid' in e.msg:
                 raise CodeInvalid(e.msg)
@@ -262,8 +283,12 @@ while True:
     else:
         u = UPCAPI(conf.get()['digiteyes_app_key'], conf.get()['digiteyes_auth_key'])
     try:
-        desc = u.get_description(barcode)
+        desc = u.get_description(barcode).decode('unicode-escape')
+	desc = str_to_utf8(desc)
+	print desc.encode('utf-8')
         print "Received description '{0}' for barcode {1}".format(desc, unicode(barcode))
+        add_grocery_item(trello_api, desc)
+        continue
     except CodeInvalid:
         print "Barcode {0} not recognized as a UPC; creating learning opportunity".format(unicode(barcode))
         try:
@@ -290,4 +315,4 @@ while True:
         continue
 
     print "Don't know what to add for product description '{0}'".format(desc)
-    notify_no_rule(desc, barcode)
+#    notify_no_rule(desc, barcode)
