@@ -161,7 +161,8 @@ raw_input('Press enter when ready: ')
 
 ######################################## oscar_scan dependencies
 run_command('apt-get install python-setuptools')
-run_command('easy_install pip')
+#run_command('easy_install pip') -> doen't work anymore - replaced by this:
+run_command('apt-get install python-pip')
 run_command('pip install PyYAML trello twilio')
 
 
@@ -251,6 +252,7 @@ from lib import trellodb
 trello_db = trellodb.TrelloDB(trello_api, trello_db_board)
 for rule in new_rules:
     trello_db.insert('description_rules', rule)
+    uncomment if you want the examples to be added.
 
 
 ######################################## Oscar configs
