@@ -234,7 +234,7 @@ def add_grocery_item(trello_api, item):
     # Add item if it's not there already
     if item not in card_names:
         print "Adding '{0}' to grocery list".format(item)
-        trello_api.lists.new_card(grocery_list['id'], item)
+        trello_api.lists.new_card(grocery_list['id'], item, None)
     else:
         print "Item '{0}' is already on the grocery list; not adding".format(item)
 
