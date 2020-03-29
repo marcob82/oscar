@@ -252,7 +252,7 @@ from lib import trellodb
 trello_db = trellodb.TrelloDB(trello_api, trello_db_board)
 for rule in new_rules:
     trello_db.insert('description_rules', rule)
-    uncomment if you want the examples to be added.
+    #uncomment if you want the examples to be added.
 
 
 ######################################## Oscar configs
